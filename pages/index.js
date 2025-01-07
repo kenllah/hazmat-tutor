@@ -1,3 +1,9 @@
+import Head from 'next/head'
+
+<Head>
+    ... the rest of your HTML head ...
+    <link rel="icon" href="/public/favicon.ico" /> // <- HERE
+</Head>
 import React, { useState } from 'react';
 
 export default function HazmatTutor() {
