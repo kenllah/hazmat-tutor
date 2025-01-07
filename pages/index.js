@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Image from 'next/image'; 
-import image1 from '/images/image1.svg';
+<Image src="/images/image1.svg" alt="Image for Section 1" width={400} height={300} />
 import image2 from '/images/image2.svg';
 import image3 from '/images/image3.svg';
 
