@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import image1 from './public/image1.svg';
-import image2 from './public/image2.svg';
-import image3 from './public/image3.svg';
+import Image from 'next/image'; // Import the Next.js Image component
+import image1 from './image1.svg';
+import image2 from './image2.svg';
+import image3 from './image3.svg';
 
 const HazmatTutor = () => {
   const [currentSection, setCurrentSection] = useState(0);
