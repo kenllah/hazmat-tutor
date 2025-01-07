@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
-<Image src="/images/image1.svg" alt="Image for Section 1" width={400} height={300} />
-<Image src="/images/image2.svg" alt="Image for Section 2" width={400} height={300} />
-<Image src="/images/image3.svg" alt="Image for Section 3" width={400} height={300} />
+
 const HazmatTutor = () => {
   const [currentSection, setCurrentSection] = useState(0);
   const [showQuiz, setShowQuiz] = useState(false);
@@ -15,7 +13,7 @@ const HazmatTutor = () => {
         • Bridges, tunnels, or buildings
         • Places where people gather
         • Open fires`,
-      diagramCaption: "Safe parking distances illustration for explosive materials", 
+      diagramCaption: "Safe parking distances illustration for explosive materials",
       quiz: {
         question: "How far must you park from bridges, tunnels, or buildings when carrying Division 1.1, 1.2, or 1.3 explosives?",
         options: [
@@ -83,19 +81,9 @@ const HazmatTutor = () => {
         <p>{sections[currentSection].content}</p>
         <div>
           {currentSection === 0 && (
-            <Image src={image1} alt="Image for Section 1" width={400} height={300} />
+            <Image src="/images/image1.svg" alt="Image for Section 1" width={400} height={300} />
           )}
           {currentSection === 1 && (
-            <Image src={image2} alt="Image for Section 2" width={400} height={300} />
+            <Image src="/images/image2.svg" alt="Image for Section 2" width={400} height={300} />
           )}
-          {currentSection === 2 && (
-            <Image src={image3} alt="Image for Section 3" width={400} height={300} />
-          )}
-        </div>
-        {/* ... (rest of your quiz and progress logic) ... */} 
-      </div>
-    </div>
-  );
-};
-
-export default HazmatTutor;
+          {currentSection === 
