@@ -54,46 +54,4 @@ const HazmatTutor = () => {
       quiz: {
         question: "What should you use instead of flares for emergency signaling?",
         options: [
-          "Burning fuses",
-          "Matches",
-          "Reflective triangles",
-          "Smoke signals"
-        ],
-        correct: 2
-      }
-    }
-  ];
-
-  const handleAnswer = (questionIndex, selectedOption) => {
-    if (selectedOption === sections[currentSection].quiz.correct) {
-      setScore(score + 1);
-    }
-    if (currentSection < sections.length - 1) {
-      setCurrentSection(currentSection + 1);
-    }
-  };
-
-  return (
-    <div>
-      <h1>Hazmat Tutor</h1>
-      <div className="section">
-        <h2>{sections[currentSection].title}</h2>
-        <p>{sections[currentSection].content}</p>
-        <div>
-          {currentSection === 0 && (
-            <Image src="/images/image1.svg" alt="Image for Section 1" width={400} height={300} />
-          )}
-          {currentSection === 1 && (
-            <Image src="/images/image2.svg" alt="Image for Section 2" width={400} height={300} />
-          )}
-          {currentSection === 2 && (
-            <Image src="/images/image3.svg" alt="Image for Section 3" width={400} height={300} />
-          )}
-        </div>
-        {/* ... (rest of your quiz and progress logic) ... */}
-      </div>
-    </div>
-  );
-};
-
-export default HazmatTutor;
+          "Burning
