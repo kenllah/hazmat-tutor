@@ -8,8 +8,8 @@ import { AlertCircle, BookOpen, CheckCircle2 } from "lucide-react";
 
 const HazmatTutor = () => {
   const [currentSection, setCurrentSection] = useState(0);
-  const [showQuiz, setShowQuiz] = useState(false);
   const [score, setScore] = useState(0);
+  const [quizCompleted, setQuizCompleted] = useState(false);
 
   const sections = [
     {
@@ -18,7 +18,6 @@ const HazmatTutor = () => {
         • Bridges, tunnels, or buildings
         • Places where people gather
         • Open fires`,
-      diagram: "/api/placeholder/400/300", 
       diagramCaption: "Safe parking distances illustration for explosive materials",
       quiz: {
         question: "How far must you park from bridges, tunnels, or buildings when carrying Division 1.1, 1.2, or 1.3 explosives?",
@@ -38,7 +37,6 @@ const HazmatTutor = () => {
         • Know the hazards of the materials
         • Know emergency procedures
         • Be able to move the vehicle if needed`,
-      diagram: "/api/placeholder/400/300", 
       diagramCaption: "Proper vehicle attendance zones and positioning",
       quiz: {
         question: "How far can an attendant be from their placarded vehicle?",
@@ -57,7 +55,6 @@ const HazmatTutor = () => {
         • Use reflective triangles or red electric lights instead
         • Follow route restrictions and obtain necessary permits
         • Avoid tunnels, bridges, and populated areas when placarded`,
-      diagram: "/api/placeholder/400/300", 
       diagramCaption: "Proper emergency signaling equipment and placement",
       quiz: {
         question: "What should you use instead of flares for emergency signaling?",
@@ -72,14 +69,46 @@ const HazmatTutor = () => {
     }
   ];
 
-  const handleAnswer = (questionIndex, selectedOption) => {
+  const handleAnswer = (selectedOption) => {
     if (selectedOption === sections[currentSection].quiz.correct) {
       setScore(score + 1);
     }
+
     if (currentSection < sections.length - 1) {
       setCurrentSection(currentSection + 1);
+    } else {
+      setQuizCompleted(true);
     }
   };
+
+  const resetQuiz = () => {
+    setCurrentSection(0);
+    setScore(0);
+    setQuizCompleted(false);
+  };
+
+  if (quizCompleted) {
+    return (
+      <Card className="w-full max-w-4xl mx-auto">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <CheckCircle2 className="h-6 w-6 text-green-600" />
+            Quiz Completed!
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-6 text-center">
+            <p className="text-lg font-semibold">
+              Your final score is: {score}/{sections.length}
+            </p>
+            <Button onClick={resetQuiz} className="bg-blue-500 text-white">
+              Restart Quiz
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <Card className="w-full max-w-4xl mx-auto">
@@ -100,15 +129,9 @@ const HazmatTutor = () => {
 
           {/* Diagram */}
           <div className="bg-white p-4 rounded-lg border">
-            {currentSection === 0 && (
-              <img src={image1} alt="Image for Section 1" />
-            )}
-            {currentSection === 1 && (
-              <img src={image2} alt="Image 2" />
-            )}
-            {currentSection === 2 && (
-              <img src={image3} alt="Image 3" />
-            )}
+            {currentSection === 0 && <img src={image1} alt="Image for Section 1" />}
+            {currentSection === 1 && <img src={image2} alt="Image 2" />}
+            {currentSection === 2 && <img src={image3} alt="Image 3" />}
             <p className="text-center text-gray-600 text-sm">
               {sections[currentSection].diagramCaption}
             </p>
@@ -121,9 +144,10 @@ const HazmatTutor = () => {
             <div className="space-y-2">
               {sections[currentSection].quiz.options.map((option, index) => (
                 <Button
-                  key={index}
-                  onClick={() => handleAnswer(currentSection, index)}
+                  key={`${currentSection}-${index}`}
+                  onClick={() => handleAnswer(index)}
                   className="w-full justify-start text-left"
+                  aria-label={`Option ${index + 1}: ${option}`}
                 >
                   {option}
                 </Button>
@@ -140,6 +164,11 @@ const HazmatTutor = () => {
               Score: {score}/{sections.length}
             </div>
           </div>
+
+          {/* Reset Button */}
+          <Button onClick={resetQuiz} className="bg-gray-200 text-black">
+            Reset Quiz
+          </Button>
         </div>
       </CardContent>
     </Card>
