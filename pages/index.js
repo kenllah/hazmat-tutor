@@ -86,4 +86,14 @@ const HazmatTutor = () => {
           {currentSection === 1 && (
             <Image src="/images/image2.svg" alt="Image for Section 2" width={400} height={300} />
           )}
-          {currentSection === 
+          {currentSection === 2 && (
+            <Image src="/images/image3.svg" alt="Image for Section 3" width={400} height={300} />
+          )}
+        </div>
+        {/* ... (rest of your quiz and progress logic) ... */}
+      </div>
+    </div>
+  );
+};
+
+export default HazmatTutor;
