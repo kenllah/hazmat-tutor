@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-
+import Image from 'next/image';
+<Image src="/images/image1.svg" alt="Image for Section 1" width={400} height={300} />
+<Image src="/images/image2.svg" alt="Image for Section 2" width={400} height={300} />
+<Image src="/images/image3.svg" alt="Image for Section 3" width={400} height={300} />
 const HazmatTutor = () => {
   const [currentSection, setCurrentSection] = useState(0);
   const [showQuiz, setShowQuiz] = useState(false);
