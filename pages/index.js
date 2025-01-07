@@ -1,28 +1,12 @@
 import React, { useState } from 'react';
-import { BookOpen, CheckCircle, XCircle } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Button } from '@/components/ui/button';
-import { Progress } from '@/components/ui/progress';
-
-interface QuizQuestion {
-  question: string;
-  options: string[];
-  correct: number;
-}
-
-interface Section {
-  title: string;
-  content: string;
-  quiz: QuizQuestion;
-}
+import { BookOpen } from 'lucide-react';
 
 export default function HazmatTutor() {
   const [currentSection, setCurrentSection] = useState(0);
   const [score, setScore] = useState(0);
   const [answered, setAnswered] = useState<number | null>(null);
 
-  const sections: Section[] = [
+  const sections = [
     {
       title: "Parking Rules for Explosives (Division 1.1, 1.2, 1.3)",
       content: `Never park within five feet of the traveled part of the road. Except for brief operational needs, don't park within 300 feet of:
@@ -63,7 +47,6 @@ export default function HazmatTutor() {
   const handleAnswer = (selectedOption: number) => {
     setAnswered(selectedOption);
     
-    // Delay the transition to next section to show feedback
     setTimeout(() => {
       if (selectedOption === sections[currentSection].quiz.correct) {
         setScore(score + 1);
@@ -75,92 +58,89 @@ export default function HazmatTutor() {
     }, 1500);
   };
 
-  const progress = ((currentSection + 1) / sections.length) * 100;
-
   return (
-    <Card className="max-w-4xl mx-auto">
-      <CardHeader className="border-b">
-        <CardTitle className="flex items-center gap-2">
-          <BookOpen className="h-6 w-6" />
-          {sections[currentSection].title}
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="p-6 space-y-6">
-        {/* Learning Content */}
-        <div className="bg-gray-50 p-6 rounded-lg">
-          <pre className="whitespace-pre-wrap font-sans">
-            {sections[currentSection].content}
-          </pre>
+    <div className="max-w-4xl mx-auto p-4">
+      <div className="bg-white shadow-lg rounded-lg">
+        {/* Header */}
+        <div className="p-4 border-b border-gray-200">
+          <h1 className="flex items-center gap-2 text-2xl font-bold">
+            <BookOpen className="h-6 w-6" />
+            {sections[currentSection].title}
+          </h1>
         </div>
 
-        {/* Quiz Section */}
-        <div className="bg-blue-50 p-6 rounded-lg">
-          <h3 className="font-semibold mb-4">Knowledge Check</h3>
-          <p className="mb-4">{sections[currentSection].quiz.question}</p>
-          <div className="space-y-2">
-            {sections[currentSection].quiz.options.map((option, index) => {
-              const isCorrect = index === sections[currentSection].quiz.correct;
-              const isSelected = answered === index;
-              let buttonStyle = "w-full text-left px-4 py-2 rounded border";
-              
-              if (answered !== null) {
-                if (isCorrect) {
-                  buttonStyle += " bg-green-100 border-green-500";
-                } else if (isSelected) {
-                  buttonStyle += " bg-red-100 border-red-500";
-                } else {
-                  buttonStyle += " bg-white border-gray-200";
-                }
-              } else {
-                buttonStyle += " bg-white hover:bg-gray-100 border-gray-200";
-              }
-
-              return (
-                <button
-                  key={index}
-                  onClick={() => answered === null && handleAnswer(index)}
-                  className={buttonStyle}
-                  disabled={answered !== null}
-                  aria-label={`${option}${isCorrect ? ' (Correct answer)' : ''}`}
-                >
-                  <div className="flex items-center justify-between">
-                    <span>{option}</span>
-                    {answered !== null && isCorrect && (
-                      <CheckCircle className="h-5 w-5 text-green-600" />
-                    )}
-                    {answered !== null && isSelected && !isCorrect && (
-                      <XCircle className="h-5 w-5 text-red-600" />
-                    )}
-                  </div>
-                </button>
-              );
-            })}
+        <div className="p-4 space-y-6">
+          {/* Content Section */}
+          <div className="bg-gray-50 p-4 rounded-lg">
+            <pre className="whitespace-pre-wrap font-sans">
+              {sections[currentSection].content}
+            </pre>
           </div>
-        </div>
 
-        {/* Progress and Score */}
-        <div className="space-y-4">
-          <Progress value={progress} className="w-full" />
-          <div className="flex justify-between items-center text-sm text-gray-600">
-            <div>
+          {/* Quiz Section */}
+          <div className="bg-blue-50 p-4 rounded-lg">
+            <h3 className="font-semibold mb-4">Knowledge Check</h3>
+            <p className="mb-4">{sections[currentSection].quiz.question}</p>
+            <div className="space-y-2">
+              {sections[currentSection].quiz.options.map((option, index) => {
+                const isCorrect = index === sections[currentSection].quiz.correct;
+                const isSelected = answered === index;
+                let buttonClasses = "w-full text-left px-4 py-2 rounded border ";
+                
+                if (answered !== null) {
+                  if (isCorrect) {
+                    buttonClasses += "bg-green-100 border-green-500 text-green-700 ";
+                  } else if (isSelected) {
+                    buttonClasses += "bg-red-100 border-red-500 text-red-700 ";
+                  } else {
+                    buttonClasses += "bg-white border-gray-200 ";
+                  }
+                } else {
+                  buttonClasses += "bg-white hover:bg-gray-100 border-gray-200 ";
+                }
+
+                return (
+                  <button
+                    key={index}
+                    onClick={() => answered === null && handleAnswer(index)}
+                    className={buttonClasses}
+                    disabled={answered !== null}
+                  >
+                    <div className="flex justify-between items-center">
+                      <span>{option}</span>
+                      {answered !== null && isCorrect && (
+                        <span className="text-green-600">✓</span>
+                      )}
+                      {answered !== null && isSelected && !isCorrect && (
+                        <span className="text-red-600">✗</span>
+                      )}
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Progress and Score */}
+          <div className="flex justify-between items-center border-t pt-4">
+            <div className="text-gray-600">
               Section {currentSection + 1} of {sections.length}
             </div>
-            <div>
+            <div className="text-gray-600">
               Score: {score}/{sections.length}
             </div>
           </div>
-        </div>
 
-        {currentSection === sections.length - 1 && answered !== null && (
-          <Alert className={score === sections.length ? "bg-green-50" : "bg-blue-50"}>
-            <AlertDescription>
+          {/* Completion Message */}
+          {currentSection === sections.length - 1 && answered !== null && (
+            <div className={`p-4 rounded-lg ${score === sections.length ? 'bg-green-50 text-green-700' : 'bg-blue-50 text-blue-700'}`}>
               {score === sections.length 
                 ? "Congratulations! You've completed the training with a perfect score!" 
                 : `Training complete! You scored ${score} out of ${sections.length}. Consider reviewing the material and trying again for a better score.`}
-            </AlertDescription>
-          </Alert>
-        )}
-      </CardContent>
-    </Card>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
   );
 }
