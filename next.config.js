@@ -1,7 +1,16 @@
 module.exports = {
-  experimental: {
-    removeConsole: true, // Example: Remove in production logs
+  reactStrictMode: true,
+  async headers() {
+    return [
+      {
+        source: '/favicon.ico',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=0, must-revalidate',
+          },
+        ],
+      },
+    ];
   },
-  images: {
-    unoptimized: true // Avoid affecting via cache, sim.
-Next experts
+};
