@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 
-
 const HazmatTutor = () => {
   const [currentSection, setCurrentSection] = useState(0);
   const [showQuiz, setShowQuiz] = useState(false);
