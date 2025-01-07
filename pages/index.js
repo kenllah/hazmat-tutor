@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { AlertCircle, BookOpen, CheckCircle2 } from "lucide-react";
+import { BookOpen } from 'lucide-react';
 
-const HazmatTutor = () => {
+export default function HazmatTutor() {
   const [currentSection, setCurrentSection] = useState(0);
-  const [showQuiz, setShowQuiz] = useState(false);
   const [score, setScore] = useState(0);
 
   const sections = [
@@ -15,8 +12,6 @@ const HazmatTutor = () => {
       • Bridges, tunnels, or buildings
       • Places where people gather
       • Open fires`,
-      diagram: "/api/placeholder/400/300",
-      diagramCaption: "Safe parking distances illustration for explosive materials",
       quiz: {
         question: "How far must you park from bridges, tunnels, or buildings when carrying Division 1.1, 1.2, or 1.3 explosives?",
         options: [
@@ -35,8 +30,6 @@ const HazmatTutor = () => {
       • Know the hazards of the materials
       • Know emergency procedures
       • Be able to move the vehicle if needed`,
-      diagram: "/api/placeholder/400/300",
-      diagramCaption: "Proper vehicle attendance zones and positioning",
       quiz: {
         question: "How far can an attendant be from their placarded vehicle?",
         options: [
@@ -47,29 +40,10 @@ const HazmatTutor = () => {
         ],
         correct: 1
       }
-    },
-    {
-      title: "Emergency Signals and Route Restrictions",
-      content: `• Never use burning signals (flares) around flammable liquids or explosives
-      • Use reflective triangles or red electric lights instead
-      • Follow route restrictions and obtain necessary permits
-      • Avoid tunnels, bridges, and populated areas when placarded`,
-      diagram: "/api/placeholder/400/300",
-      diagramCaption: "Proper emergency signaling equipment and placement",
-      quiz: {
-        question: "What should you use instead of flares for emergency signaling?",
-        options: [
-          "Burning fuses",
-          "Matches",
-          "Reflective triangles",
-          "Smoke signals"
-        ],
-        correct: 2
-      }
     }
   ];
 
-  const handleAnswer = (questionIndex, selectedOption) => {
+  const handleAnswer = (selectedOption: number) => {
     if (selectedOption === sections[currentSection].quiz.correct) {
       setScore(score + 1);
     }
@@ -79,32 +53,21 @@ const HazmatTutor = () => {
   };
 
   return (
-    <Card className="w-full max-w-4xl mx-auto">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <BookOpen className="h-6 w-6" />
-          {sections[currentSection].title}
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-6">
+    <div className="max-w-4xl mx-auto p-6">
+      <div className="bg-white shadow-lg rounded-lg">
+        <div className="p-6 border-b border-gray-200">
+          <h1 className="flex items-center gap-2 text-2xl font-bold">
+            <BookOpen className="h-6 w-6" />
+            {sections[currentSection].title}
+          </h1>
+        </div>
+
+        <div className="p-6 space-y-6">
           {/* Learning Content */}
           <div className="bg-gray-50 p-6 rounded-lg">
             <pre className="whitespace-pre-wrap font-sans">
               {sections[currentSection].content}
             </pre>
-          </div>
-
-          {/* Diagram */}
-          <div className="bg-white p-4 rounded-lg border">
-            <img 
-              src={sections[currentSection].diagram}
-              alt={sections[currentSection].title}
-              className="w-full rounded-lg mb-2"
-            />
-            <p className="text-center text-gray-600 text-sm">
-              {sections[currentSection].diagramCaption}
-            </p>
           </div>
 
           {/* Quiz Section */}
@@ -113,13 +76,13 @@ const HazmatTutor = () => {
             <p className="mb-4">{sections[currentSection].quiz.question}</p>
             <div className="space-y-2">
               {sections[currentSection].quiz.options.map((option, index) => (
-                <Button
+                <button
                   key={index}
-                  onClick={() => handleAnswer(currentSection, index)}
-                  className="w-full justify-start text-left"
+                  onClick={() => handleAnswer(index)}
+                  className="w-full text-left px-4 py-2 rounded bg-white hover:bg-gray-100 border border-gray-200"
                 >
                   {option}
-                </Button>
+                </button>
               ))}
             </div>
           </div>
@@ -134,9 +97,7 @@ const HazmatTutor = () => {
             </div>
           </div>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
-};
-
-export default HazmatTutor;
+}
