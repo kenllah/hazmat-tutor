@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import Image from 'next/image'; // Import the Next.js Image component
-import image1 from '../image1.svg';
-import image2 from '../image2.svg';
-import image3 from '../image3.svg';
+import Image from 'next/image'; 
+import image1 from '../public/image1.svg'; 
+import image2 from '../public/image2.svg'; 
+import image3 from '../public/image3.svg'; 
 
 const HazmatTutor = () => {
   const [currentSection, setCurrentSection] = useState(0);
@@ -77,21 +77,20 @@ const HazmatTutor = () => {
   };
 
   return (
-    <div> 
-      {/* Basic HTML structure for now */}
-      <h1>Hazmat Tutor</h1> 
-      <div className="section"> 
-        <h2>{sections[currentSection].title}</h2> 
-        <p>{sections[currentSection].content}</p> 
-        <div> 
-          {currentSection === 0 && ( 
-            <img src={image1} alt="Image for Section 1" /> 
+    <div>
+      <h1>Hazmat Tutor</h1>
+      <div className="section">
+        <h2>{sections[currentSection].title}</h2>
+        <p>{sections[currentSection].content}</p>
+        <div>
+          {currentSection === 0 && (
+            <Image src={image1} alt="Image for Section 1" width={400} height={300} />
           )}
-          {currentSection === 1 && ( 
-            <img src={image2} alt="Image 2" /> 
+          {currentSection === 1 && (
+            <Image src={image2} alt="Image for Section 2" width={400} height={300} />
           )}
-          {currentSection === 2 && ( 
-            <img src={image3} alt="Image 3" /> 
+          {currentSection === 2 && (
+            <Image src={image3} alt="Image for Section 3" width={400} height={300} />
           )}
         </div>
         {/* ... (rest of your quiz and progress logic) ... */} 
