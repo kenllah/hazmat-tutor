@@ -1,16 +1,12 @@
-module.exports = {
-  reactStrictMode: true,
-  async headers() {
-    return [
-      {
-        source: '/favicon.ico',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=0, must-revalidate',
-          },
-        ],
-      },
-    ];
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      fs: false,
+    };
+    return config;
   },
-};
+}
+
+module.exports = nextConfig
